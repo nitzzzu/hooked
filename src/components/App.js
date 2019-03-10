@@ -5,23 +5,27 @@ import Movie from './Movie';
 import Search from './Search';
 import { getMovies } from '../services/tmdb';
 
+const SEARCH_MOVIES_REQUEST = 'SEARCH_MOVIES_REQUEST';
+const SEARCH_MOVIES_SUCCESS = 'SEARCH_MOVIES_SUCCESS';
+const SEARCH_MOVIES_FAILURE = 'SEARCH_MOVIES_FAILURE';
+
 const reducer = (state, action) => {
     switch (action.type) {
-        case 'SEARCH_MOVIES_REQUEST':
+        case SEARCH_MOVIES_REQUEST:
             return {
                 ...state,
                 loading: true,
                 errorMessage: null
             };
 
-        case 'SEARCH_MOVIES_SUCCESS':
+        case SEARCH_MOVIES_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 movies: action.payload
             };
 
-        case 'SEARCH_MOVIES_ERROR':
+        case SEARCH_MOVIES_FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -46,21 +50,25 @@ const App = () => {
 
     const search = async searchValue => {
         dispatch({
-            type: 'SEARCH_MOVIES_REQUEST'
+            type: SEARCH_MOVIES_REQUEST
         });
 
         try {
             let movies = await getMovies(searchValue);
             dispatch({
-                type: 'SEARCH_MOVIES_SUCCESS',
+                type: SEARCH_MOVIES_SUCCESS,
                 payload: movies
             });
         } catch (e) {
             dispatch({
-                type: 'SEARCH_MOVIES_ERROR',
+                type: SEARCH_MOVIES_FAILURE,
                 error: 'error'
             });
         }
+    };
+
+    const openMovieModal = async id => {
+        alert(id);
     };
 
     const { movies, errorMessage, loading } = state;
@@ -76,7 +84,7 @@ const App = () => {
                 ) : errorMessage ? (
                     <div className="errorMessage">{errorMessage}</div>
                 ) : (
-                    movies.map((movie, index) => <Movie key={`${index}-${movie.title}`} movie={movie} />)
+                    movies.map((movie, index) => <Movie key={`${index}-${movie.title}`} movie={movie} openMovieModal={openMovieModal} />)
                 )}
             </div>
         </div>

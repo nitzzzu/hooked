@@ -5,15 +5,15 @@ For learning purposes.
 
 <img src="images/capture.png" width="900" />
 
-### Run
+### Getting Started
 
 -   Get [TMDB api key](https://www.themoviedb.org/settings/api)
--   Clone repo
+-   Clone the project from repository
 -   Create `.env` file in root:
 
 ```
 REACT_APP_TMDB_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
--   `npm i`
--   `npm start`
+-   In your terminal, cd into the cloned folder and run `npm i`
+-   Run `npm start`. This starts the project on port `3000`.
